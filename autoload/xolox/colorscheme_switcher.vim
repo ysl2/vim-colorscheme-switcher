@@ -51,7 +51,7 @@ function! xolox#colorscheme_switcher#cycle(forward) " {{{1
     endif
     call xolox#colorscheme_switcher#switch_to(choices[index])
     if !xolox#misc#option#get('colorscheme_switcher_keep_background', 0) || &background == original_background
-      call xolox#misc#msg#info('colorscheme-switcher.vim %s: Loaded color scheme %s (%i/%i)', g:xolox#colorscheme_switcher#version, choices[index], index, len(choices))
+      call xolox#misc#msg#info('colorscheme-switcher.vim %s: Loaded color scheme %s (%i/%i)', g:xolox#colorscheme_switcher#version, choices[index], index + 1, len(choices))
       return
     endif
   endfor
@@ -63,7 +63,10 @@ function! xolox#colorscheme_switcher#find_names() " {{{1
   let matches = {}
   let exclude_list = xolox#misc#option#get('colorscheme_switcher_exclude', [])
   let exclude_builtins = xolox#misc#option#get('colorscheme_switcher_exclude_builtins', 0)
-  for fname in split(globpath(&runtimepath, 'colors/*.vim'), '\n')
+  let vimfiles = split(globpath(&runtimepath, 'colors/*.vim'), '\n')
+  let luafiles =  split(globpath(&runtimepath, 'colors/*.lua'), '\n')
+  let colorfiles = vimfiles + luafiles
+  for fname in colorfiles
     let name = fnamemodify(fname, ':t:r')
     " Ignore names in the exclude list.
     if index(exclude_list, name) == -1
