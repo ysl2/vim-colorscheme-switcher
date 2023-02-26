@@ -31,7 +31,7 @@ function! xolox#colorscheme_switcher#random() " {{{1
     let index = xolox#colorscheme_switcher#random_number(len(choices))
     call xolox#colorscheme_switcher#switch_to(choices[index])
     if !xolox#misc#option#get('colorscheme_switcher_keep_background', 0) || &background == original_background
-      call xolox#misc#msg#info('colorscheme-switcher.vim %s: Loaded random color scheme (%s)', g:xolox#colorscheme_switcher#version, choices[index])
+      echomsg 'colorscheme-switcher.vim ' . g:xolox#colorscheme_switcher#version . ': Loaded random color scheme (' . choices[index] . ')'
       return
     endif
   endfor
@@ -51,7 +51,7 @@ function! xolox#colorscheme_switcher#cycle(forward) " {{{1
     endif
     call xolox#colorscheme_switcher#switch_to(choices[index])
     if !xolox#misc#option#get('colorscheme_switcher_keep_background', 0) || &background == original_background
-      call xolox#misc#msg#info('colorscheme-switcher.vim %s: Loaded color scheme %s (%i/%i)', g:xolox#colorscheme_switcher#version, choices[index], index + 1, len(choices))
+      echomsg 'colorscheme-switcher.vim ' . g:xolox#colorscheme_switcher#version . ': Loaded color scheme ' . choices[index] . ' (' . (index + 1) . '/' . len(choices) . ')'
       return
     endif
   endfor
